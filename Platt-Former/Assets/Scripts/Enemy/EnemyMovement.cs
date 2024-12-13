@@ -16,8 +16,13 @@ using UnityEngine;
         {
             rb.velocity = new Vector2(moveSpeed, 0f);
         }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        moveSpeed = -moveSpeed;
+        FlipSprite();
+    }
 
-        void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
         {
             moveSpeed = -moveSpeed;
             FlipSprite();

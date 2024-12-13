@@ -5,12 +5,49 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDeath : MonoBehaviour
 {
+    Collider2D body;
+    Collider2D feet;
+    [SerializeField] int playerHealth = 10;
+    [SerializeField] float invincilityTime = 2f;
+    bool invincible = false;
+
+    void Disableinvincility()
+    {
+        invincible = false;
+    }
+    void Start()
+    {
+        body = GetComponent<PolygonCollider2D>();
+        feet = GetComponent<BoxCollider2D>();
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (feet.IsTouchingLayers(LayerMask.GetMask("Enemy")))
         {
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentSceneIndex);
+            Destroy(other.gameObject);
+
+        }
+        else if (body.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            if (invincible == true)
+            {
+                return;
+            }
+            if (playerHealth > 0)
+            {
+                playerHealth--;
+                invincible = true;
+                Invoke("Disableinvincility", invincilityTime);
+                Debug.Log("player Health:" + playerHealth);
+            }
+            else
+            {
+                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(currentSceneIndex);
+            }
+            
         }
     }
+
+
 }
