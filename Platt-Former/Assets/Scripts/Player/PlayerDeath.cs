@@ -7,14 +7,14 @@ public class PlayerDeath : MonoBehaviour
 {
     Collider2D body;
     Collider2D feet;
-    [SerializeField] int playerHealth = 10;
-    [SerializeField] float invincilityTime = 2f;
-    bool invincible = false;
+    //[SerializeField] int playerHealth = 10;
+    //[SerializeField] float invincilityTime = 2f;
+    //bool invincible = false;
 
-    void Disableinvincility()
-    {
-        invincible = false;
-    }
+    //void Disableinvincility()
+    //{
+        //invincible = false;
+    //}
     void Start()
     {
         body = GetComponent<PolygonCollider2D>();
@@ -29,23 +29,25 @@ public class PlayerDeath : MonoBehaviour
         }
         else if (body.IsTouchingLayers(LayerMask.GetMask("Enemy")))
         {
-            if (invincible == true)
-            {
-                return;
-            }
-            if (playerHealth > 0)
-            {
-                playerHealth--;
-                invincible = true;
-                Invoke("Disableinvincility", invincilityTime);
-                Debug.Log("player Health:" + playerHealth);
-            }
-            else
-            {
-                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene(currentSceneIndex);
-            }
-            
+            FindFirstObjectByType<GameSession>().ProcessPlayerDamage();
+
+            //if (invincible == true)
+            //{
+            //return;
+            //}
+            //if (playerHealth > 0)
+            //{
+            //playerHealth--;
+            //invincible = true;
+            //Invoke("Disableinvincility", invincilityTime);
+            //Debug.Log("player Health:" + playerHealth);
+            //}
+            //else
+            //{
+            //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            //SceneManager.LoadScene(currentSceneIndex);
+            //}
+
         }
     }
 

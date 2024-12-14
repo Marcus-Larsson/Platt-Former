@@ -17,6 +17,7 @@ public class LevelExit : MonoBehaviour
 
     void LoadLevel()
     {
+        FindFirstObjectByType<ScenePersist>().ResetScenePersist();
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
@@ -32,6 +33,8 @@ public class LevelExit : MonoBehaviour
 
     }
 }
+
+
 
 
 
